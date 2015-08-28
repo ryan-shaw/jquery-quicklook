@@ -2,6 +2,9 @@ module.exports = function(grunt){
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         less: {
+            options: {
+                plugins: [ new (require('less-plugin-autoprefix'))({browsers: ["> 1%"]})]
+            },
             build_minification:{
                 options:{
                     compress: true

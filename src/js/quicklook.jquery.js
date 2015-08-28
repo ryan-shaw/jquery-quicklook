@@ -11,11 +11,18 @@ jQuery.fn.quicklook = function(options){
         width: 500,
         bg_color: '#fff'
     }, options);
+    var open = false;
 
     var container = jQuery('#quicklook_container');
     if(!container.length){
         container = jQuery('<div id="quicklook_container"/>');
+        container.append('<iframe id="quicklook_iframe" src=""/>');
         jQuery('body').append(container);
+        jQuery('#quicklook_iframe').css({
+            height: settings.height,
+            width: settings.width,
+            top: -settings.height
+        });
         container.css({
             height: 0,
             width: 0,
@@ -24,23 +31,65 @@ jQuery.fn.quicklook = function(options){
 
     }
 
-    var showPop = function(){
-        container.css({
-            height: settings.height,
-            width: settings.width
-        });
-        container.show();
+    var showPop = function(e){
+        if(open){
+            open = false;
+            jQuery('#quicklook_iframe').css({
+                transform: 'scale(0.0)',
+                top: -settings.height
+            });
+            return container.css({
+                height: 0,
+                width: 0
+            });
+        }
+        var url = jQuery(e.target).attr('href');
+        var x   = e.pageX;
+        var y   = jQuery(window).height() - e.pageY;
+
+        if(settings.height - y < 0){
+            // Get down!
+            container.css({
+                left: x,
+                top: e.pageY
+            });
+        } else {
+            container.css({
+                left: x,
+                bottom: y
+            });
+        }
+
+        var loaded = function(){
+            jQuery('#quicklook_iframe').css({
+                transform   : 'scale(1.0)',
+                top         : 0
+            });
+
+            container.css({
+                height  : settings.height,
+                width   : settings.width,
+            });
+
+            container.show();
+            open = true;
+        };
+
+        jQuery('#quicklook_iframe').on('load', loaded);
+
+        jQuery('#quicklook_iframe').attr('src', url);
+
     };
 
     return this.each(function(){
         if(settings.action === 'click'){
             jQuery(this).on('click', function(e){
-                showPop();
+                showPop(e);
                 return false;
             });
         }else if(settings.action === 'hoer'){
             jQuery(this).on('hover', function(e){
-                showPop();
+                showPop(e);
             });
         }
     });
