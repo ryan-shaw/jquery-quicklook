@@ -3,7 +3,7 @@
  * @param  {Object} options Specify plugin options
  * @return {Object}         this.
  */
-jQuery.fn.ipop = function(options){
+jQuery.fn.quicklook = function(options){
     var settings = $.extend({
         action: 'click',
         autofit: true,
@@ -12,9 +12,9 @@ jQuery.fn.ipop = function(options){
         bg_color: '#fff'
     }, options);
 
-    var container = jQuery('#ipop_container');
+    var container = jQuery('#quicklook_container');
     if(!container.length){
-        container = jQuery('<div id="ipop_container"/>');
+        container = jQuery('<div id="quicklook_container"/>');
         jQuery('body').append(container);
         container.css({
             height: 0,

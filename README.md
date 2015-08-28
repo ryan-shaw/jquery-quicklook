@@ -1,11 +1,11 @@
-# iPop
+# jQuery Quicklook
 jQuery popup iframe plugin.
 
 # Usage
 ```
-<a class='pop' href='http://placekitten.com/500/500'></a>
+<a class='quicklook' href='http://placekitten.com/500/500'></a>
 
-$('#link').ipop(options);
+$('.quicklook').quicklook(options);
 ```
 ### Options
 #### action

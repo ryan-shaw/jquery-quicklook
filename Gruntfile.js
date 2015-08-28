@@ -7,14 +7,14 @@ module.exports = function(grunt){
                     compress: true
                 },
                 files:{
-                    'build/css/ipop.min.css': 'src/less/ipop.less'
+                    'build/css/quicklook.min.css': 'src/less/quicklook.less'
                 }
             },
             build:{
                 options:{
                 },
                 files:{
-                    'build/css/ipop.css': 'src/less/ipop.less'
+                    'build/css/quicklook.css': 'src/less/quicklook.less'
                 }
             }
         },
@@ -23,14 +23,14 @@ module.exports = function(grunt){
         },
         copy: {
             js: {
-                src: 'src/js/ipop.jquery.js',
-                dest: 'build/js/ipop.jquery.js'
+                src: 'src/js/quicklook.jquery.js',
+                dest: 'build/js/quicklook.jquery.js'
             }
         },
         uglify: {
             js: {
                 files: {
-                    'build/js/ipop.jquery.min.js': 'src/js/*.js'
+                    'build/js/quicklook.jquery.min.js': 'src/js/*.js'
                 }
             }
         }
