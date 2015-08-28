@@ -13,23 +13,31 @@ jQuery.fn.quicklook = function(options){
     }, options);
     var open = false;
 
-    var container = jQuery('#quicklook_container');
-    if(!container.length){
-        container = jQuery('<div id="quicklook_container"/>');
-        container.append('<iframe id="quicklook_iframe" src=""/>');
-        jQuery('body').append(container);
+    var $container  = jQuery('#quicklook_container');
+
+    if(!$container.length){
+        $container = jQuery('<div id="quicklook_container"><span class="close">x</span></div>');
+        $container.append('<iframe id="quicklook_iframe" src=""/>');
+        jQuery('body').append($container);
+
         jQuery('#quicklook_iframe').css({
             height: settings.height,
             width: settings.width,
             top: -settings.height
         });
-        container.css({
+        $container.css({
             height: 0,
             width: 0,
             'background-color': settings.bg_color
         });
-
     }
+
+    var $close = jQuery('#quicklook_container .close');
+
+    $close.on('click', function(e){
+        if(open)
+            showPop(e); // Will close as it is open.
+    });
 
     var showPop = function(e){
         if(open){
@@ -38,7 +46,8 @@ jQuery.fn.quicklook = function(options){
                 transform: 'scale(0.0)',
                 top: -settings.height
             });
-            return container.css({
+            $close.hide();
+            return $container.css({
                 height: 0,
                 width: 0
             });
@@ -49,12 +58,12 @@ jQuery.fn.quicklook = function(options){
 
         if(settings.height - y < 0){
             // Get down!
-            container.css({
+            $container.css({
                 left: x,
                 top: e.pageY
             });
         } else {
-            container.css({
+            $container.css({
                 left: x,
                 bottom: y
             });
@@ -66,12 +75,13 @@ jQuery.fn.quicklook = function(options){
                 top         : 0
             });
 
-            container.css({
+            $container.css({
                 height  : settings.height,
                 width   : settings.width,
             });
 
-            container.show();
+            $container.show();
+            $close.show();
             open = true;
         };
 
